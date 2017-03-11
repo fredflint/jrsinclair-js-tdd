@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
 const PhotoLister = require('./photo-lister');
+const cheerio = require('cheerio');
 
 describe('PhotoLister', function () {
   it('should exist', function () {
@@ -61,5 +62,29 @@ describe('#photoToListItem()', function () {
     photos.forEach(function (photo, index) {
       expect(PhotoLister.photoToListItem(photo)).to.equal(expectedListItems[index]);
     });
+  });
+});
+
+describe('#addListToElement()', function () {
+  it(
+    'should take an HTML string of list items and add them to an element with a given selector'
+    , function () {
+      const $ = cheerio.load('<html><head></head><body><div id="mydiv"></div></body></html>');
+      const list = [
+        '<ul><li><figure><img src="http://loremflickr.com/960/593" alt=""/>',
+        '<figcaption>This is a test</figcaption></figure></li>',
+        '<li><figure><img src="http://loremflickr.com/960/593/puppy" alt=""/>',
+        '<figcaption>This is another test</figcaption></figure></li></ul>',
+      ].join('');
+      const selector = '#mydiv';
+      const $div = PhotoLister.addListToElement($, selector, list);
+
+      expect($div.find('ul').length).to.equal(1);
+      expect($div.find('li').length).to.equal(2);
+      expect($div.find('figure').length).to.equal(2);
+      expect($div.find('img').length).to.equal(2);
+      expect($div.find('figcaption').length).to.equal(2);
+
+
   });
 });
