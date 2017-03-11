@@ -1,0 +1,23 @@
+{
+  "name": "jrsinclair-js-tdd",
+  "version": "0.1.0",
+  "description": "http://jrsinclair.com/articles/2016/gentle-introduction-to-javascript-tdd-intro/",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/yhoiseth/jrsinclair-js-tdd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yhoiseth/jrsinclair-js-tdd/issues"
+  },
+  "homepage": "https://github.com/yhoiseth/jrsinclair-js-tdd#readme"
+}
