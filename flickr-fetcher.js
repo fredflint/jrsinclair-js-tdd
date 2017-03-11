@@ -20,6 +20,10 @@ const FlickrFetcher = {
     };
   },
   fetchFlickrData(apiKey, fetch) {
+    if (!fetch && $) {
+      const fetch = $.getJSON.bind(jQuery);
+    }
+
     const urlParts = [
       'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=',
       apiKey,
@@ -37,4 +41,6 @@ const FlickrFetcher = {
   }
 };
 
-module.exports = FlickrFetcher;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = FlickrFetcher;
+}

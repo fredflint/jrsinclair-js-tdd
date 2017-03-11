@@ -25,5 +25,7 @@ const PhotoLister = {
   }
 };
 
-module.exports = PhotoLister;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = PhotoLister;
+}
 
