@@ -16,7 +16,7 @@ const FlickrFetcher = {
   transformMetaPhoto(metaPhoto) {
     return {
       title: metaPhoto.title,
-      url: this.metaPhotoToUrl(metaPhoto),
+      url: FlickrFetcher.metaPhotoToUrl(metaPhoto),
     };
   },
   fetchFlickrData(apiKey, fetch) {
@@ -30,6 +30,11 @@ const FlickrFetcher = {
 
     return fetch(url);
   },
+  fetchPhotos(apiKey, fetch) {
+    return this.fetchFlickrData(apiKey, fetch).then(function(data) {
+      return data.photos.photo.map(FlickrFetcher.transformMetaPhoto);
+    })
+  }
 };
 
 module.exports = FlickrFetcher;
