@@ -20,7 +20,7 @@ const PhotoLister = {
       '</ul>',
     ].join('');
   },
-  addListToElement($, selector, list) {
+  addPhotosToElement($, selector, list) {
     return $(selector).append(list);
   }
 };
@@ -28,4 +28,3 @@ const PhotoLister = {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = PhotoLister;
 }
-

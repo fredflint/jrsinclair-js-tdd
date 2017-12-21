@@ -65,7 +65,7 @@ describe('#photoToListItem()', function () {
   });
 });
 
-describe('#addListToElement()', function () {
+describe('#addPhotosToElement()', function () {
   it(
     'should take an HTML string of list items and add them to an element with a given selector'
     , function () {
@@ -77,7 +77,7 @@ describe('#addListToElement()', function () {
         '<figcaption>This is another test</figcaption></figure></li></ul>',
       ].join('');
       const selector = '#mydiv';
-      const $div = PhotoLister.addListToElement($, selector, list);
+      const $div = PhotoLister.addPhotosToElement($, selector, list);
 
       expect($div.find('ul').length).to.equal(1);
       expect($div.find('li').length).to.equal(2);

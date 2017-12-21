@@ -9,6 +9,55 @@ describe('FlickrFetcher', function () {
   });
 });
 
+
+describe('#buildFlickrURL()', function () {
+   it('returns default page size of 20', function() {
+      var actual = FlickrFetcher.getDEFAULT_PAGE_SIZE()
+      expect(actual).to.equal(20);
+   });
+   it('builds URL using default pageSize', function () {
+      var apiKey = "12345";
+      var DEFAULT_PAGE_SIZE = FlickrFetcher.getDEFAULT_PAGE_SIZE();
+
+      var expectedUrlParts = [
+        'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=',
+        apiKey,
+        '&text=pugs&format=json&nojsoncallback=1&per_page=',
+        DEFAULT_PAGE_SIZE
+      ];
+      var expectedUrl = expectedUrlParts.join('');
+      var actual = FlickrFetcher.buildFlickrURL(apiKey)
+      expect(actual).to.equal(expectedUrl);
+
+   });
+
+   it('builds URL used in client/test code and in SUT with apiKey and pageSize', function () {
+      var apiKey = "12345";
+      var pageSize = 99;
+
+      var expectedUrlParts = [
+        'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=',
+        apiKey,
+        '&text=pugs&format=json&nojsoncallback=1&per_page=',
+        pageSize
+      ];
+      var expectedUrl = expectedUrlParts.join('');
+      var actual = FlickrFetcher.buildFlickrURL(apiKey, pageSize)
+      expect(actual).to.equal(expectedUrl);
+
+      pageSize = 33;
+      expectedUrlParts = [
+       'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=',
+       apiKey,
+       '&text=pugs&format=json&nojsoncallback=1&per_page=',
+       pageSize
+      ];
+      expectedUrl = expectedUrlParts.join('');
+      var actual = FlickrFetcher.buildFlickrURL(apiKey, pageSize)
+      expect(actual).to.equal(expectedUrl);
+   });
+});
+
 describe('#metaPhotoToUrl()', function () {
   it('should take a photo object from Flickr and return a string', function () {
     const metaPhotos = [
@@ -132,16 +181,10 @@ describe('#fetchFlickrData()', function () {
       };
 
       const fakeFetcher = function (url) {
-        const expectedUrlParts = [
-          'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=',
-          apiKey,
-          '&text=pugs&format=json&nojsoncallback=1',
-        ];
+           const expectedUrl = FlickrFetcher.buildFlickrURL(apiKey);
 
-        const expectedUrl = expectedUrlParts.join('');
-
-        expect(url).to.equal(expectedUrl);
-        return Promise.resolve(fakeData);
+           expect(url).to.equal(expectedUrl);
+           return Promise.resolve(fakeData);
       };
 
       return FlickrFetcher.fetchFlickrData(apiKey, fakeFetcher).then(function(actual) {
@@ -201,8 +244,7 @@ describe('#fetchPhotos()', function () {
       };
 
       const fakeFetcher = function(url) {
-        const expectedURL = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key='
-          + apiKey + '&text=pugs&format=json&nojsoncallback=1';
+        const expectedURL = FlickrFetcher.buildFlickrURL(apiKey);
         expect(url).to.equal(expectedURL);
         return Promise.resolve(fakeData);
       };
@@ -213,17 +255,3 @@ describe('#fetchPhotos()', function () {
     }
   );
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
