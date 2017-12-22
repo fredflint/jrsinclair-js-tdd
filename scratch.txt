@@ -1,0 +1,2 @@
+<script src="https://rawgit.com/jrsinclair/flickr-lister/master/flickr-fetcher.js"></script>
+<script src="https://cdn.rawgit.com/jrsinclair/flickr-lister/master/photo-lister.js"></script>
