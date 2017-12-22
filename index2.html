@@ -14,7 +14,7 @@
     <script src="flickr-fetcher.js"></script>
     <script src="photo-lister.js"></script>
     <script>
-      FlickrFetcher.fetchPhotos('8060d4cdac3ceb86af470aae29af3a56', $.getJSON)
+      FlickrFetcher.fetchPhotos('8060d4cdac3ceb86af470aae29af3a56', $.getJSON, 49)
           .then(PhotoLister.photoListToHTML)
           .then(function(photosHTML) {
               console.log(photosHTML); //PhotoLister.addPhotosToElement($, '#mydiv', photosHTML)

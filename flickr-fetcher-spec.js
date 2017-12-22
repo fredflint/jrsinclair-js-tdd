@@ -1,7 +1,7 @@
 'use strict';
 
 const expect = require('chai').expect;
-const FlickrFetcher = require('./flickr-fetcher.js');
+const FlickrFetcherClass = require('./flickr-fetcher.js');
 
 describe('FlickrFetcher', function () {
   it('should exist', function () {
@@ -10,14 +10,47 @@ describe('FlickrFetcher', function () {
 });
 
 
+var FlickrFetcher = new FlickrFetcherClass();
+
+describe('#getPageSize()', function () {
+   it('returns the  default pageSize value if setPageSize not called yet', function() {
+      var FlickrFetcherLocal = new FlickrFetcherClass();
+
+      var expected = FlickrFetcherClass.getDEFAULT_PAGE_SIZE();
+      //expect(expected).to.equal(20);
+
+      var actual = FlickrFetcherLocal.getPageSize();
+      expect(actual).to.equal(expected);
+   });
+
+   it('returns the pageSize configured by setPageSize', function() {
+      var FlickrFetcherLocal = new FlickrFetcherClass();
+      var expectedPageSize = 1;
+      FlickrFetcherLocal.setPageSize(expectedPageSize);
+
+
+      var actual = FlickrFetcherLocal.getPageSize();
+      expect(actual).to.equal(expectedPageSize);
+   });
+});
+
+describe('#setPagSize()', function () {
+   it('sets the pageSize property', function() {
+      var expected = 49;
+      FlickrFetcher.setPageSize(expected);
+      var actual = FlickrFetcher.getPageSize();
+      expect(actual).to.equal(expected);
+   });
+});
+
 describe('#buildFlickrURL()', function () {
    it('returns default page size of 20', function() {
-      var actual = FlickrFetcher.getDEFAULT_PAGE_SIZE()
+      var actual = FlickrFetcherClass.getDEFAULT_PAGE_SIZE()
       expect(actual).to.equal(20);
    });
    it('builds URL using default pageSize', function () {
       var apiKey = "12345";
-      var DEFAULT_PAGE_SIZE = FlickrFetcher.getDEFAULT_PAGE_SIZE();
+      var DEFAULT_PAGE_SIZE = FlickrFetcherClass.getDEFAULT_PAGE_SIZE();
 
       var expectedUrlParts = [
         'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=',
@@ -25,9 +58,9 @@ describe('#buildFlickrURL()', function () {
         '&text=pugs&format=json&nojsoncallback=1&per_page=',
         DEFAULT_PAGE_SIZE
       ];
-      var expectedUrl = expectedUrlParts.join('');
+      var expectedURL = expectedUrlParts.join('');
       var actual = FlickrFetcher.buildFlickrURL(apiKey)
-      expect(actual).to.equal(expectedUrl);
+      expect(actual).to.equal(expectedURL);
 
    });
 
@@ -45,7 +78,7 @@ describe('#buildFlickrURL()', function () {
       var actual = FlickrFetcher.buildFlickrURL(apiKey, pageSize)
       expect(actual).to.equal(expectedUrl);
 
-      pageSize = 33;
+      pageSize = 49;
       expectedUrlParts = [
        'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=',
        apiKey,
@@ -91,7 +124,7 @@ describe('#metaPhotoToUrl()', function () {
     ];
 
     metaPhotos.forEach(function (metaPhoto, index) {
-      let actual = FlickrFetcher.metaPhotoToUrl(metaPhoto);
+      let actual = FlickrFetcherClass.metaPhotoToUrl(metaPhoto);
       let expected = expectedUrls[index];
       expect(actual).to.eql(expected);
     });
@@ -136,7 +169,7 @@ describe('#transformMetaPhoto()', () => {
   ];
 
   metaPhotos.forEach((metaPhoto, index) => {
-    let actual = FlickrFetcher.transformMetaPhoto(metaPhoto);
+    let actual = FlickrFetcherClass.transformMetaPhoto(metaPhoto);
     let expected = expectedTransformedMetaPhotos[index];
     expect(actual).to.eql(expected);
   });

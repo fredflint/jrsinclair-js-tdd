@@ -1,3 +1,5 @@
+"use strict";
+
 const PhotoLister = {
   photoToListItem(photo) {
     return [
