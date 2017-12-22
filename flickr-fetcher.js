@@ -74,5 +74,8 @@ class FlickrFetcher {
    }
 }
 
-module.exports = FlickrFetcher;
-//export let person = new Person();
+
+if (typeof module !== 'undefined' && module.exports) {
+   module.exports = FlickrFetcher;
+   //export let person = new Person();
+}
